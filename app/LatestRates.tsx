@@ -5,6 +5,7 @@ import { fetchLatestCurrencyRates } from "@utils/api";
 
 export default function LatestRates() {
   const [latestRates, setLatestRates] = useState<Record<string, number> | null>(null);
+  const [currencies, setCurrencies] = useState<Record<string, number> | null>(null);
   const [timestamp, setTimestamp] = useState<Date>(new Date());
   const [loading, setLoading] = useState(true);
 
@@ -13,6 +14,7 @@ export default function LatestRates() {
       try {
         const data = await fetchLatestCurrencyRates();
         setLatestRates(data.rates);
+        setCurrencies(data.currencies);
         setTimestamp(new Date(data.timestamp * 1000));
       } catch (err) {
         console.error("Error fetching latestRates:", err);
@@ -37,6 +39,9 @@ export default function LatestRates() {
             <thead className="sticky top-0 z-10 bg-blue-200 dark:bg-blue-800">
               <tr>
                 <th className="px-4 py-2 border border-[--foreground] dark:border-[hsla(0,0%,.25)]">
+                  Code
+                </th>
+                <th className="px-4 py-2 border border-[--foreground] dark:border-[hsla(0,0%,.25)]">
                   Currency
                 </th>
                 <th className="px-4 py-2 border border-[--foreground] dark:border-[hsla(0,0%,.25)]">
@@ -49,6 +54,9 @@ export default function LatestRates() {
                 <tr key={currency}>
                   <td className="px-4 py-2 border border-[--foreground] dark:border-[hsla(0,0%,.25)]">
                     {currency}
+                  </td>
+                  <td className="px-4 py-2 border border-[--foreground] dark:border-[hsla(0,0%,.25)]">
+                    {currencies ? currencies[currency] : "-"}
                   </td>
                   <td className="px-4 py-2 border border-[--foreground] dark:border-[hsla(0,0%,.25)]">
                     {rate}
