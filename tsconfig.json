@@ -18,6 +18,7 @@
     "paths": {
       "@constants/*": ["constants/*"],
       "@lib/*": ["lib/*"],
+      "@utils/*": ["utils/*"],
       "@/*": ["./*"]
     }
   },
